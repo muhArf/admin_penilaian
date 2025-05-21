@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/logo.svg" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Tambahkan SweetAlert -->
+    <title>Data Siswa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .breadcrumb {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+        .breadcrumb a {
+            text-decoration: none;
+            color: #007bff;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .table-container {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between; /* Memisahkan tombol dan input pencarian */
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            display: flex;
+            align-items: center; /* Menyelaraskan item di dalam container */
+        }
+        .search-container input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 300px; /* Mengatur lebar input pencarian */
+            box-sizing: border-box; /* Memastikan padding tidak menambah lebar total */
+            margin-right: 10px; /* Menambahkan jarak antara input dan dropdown */
+        }
+        .entries-select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px; /* Menambahkan jarak antara dropdown dan label */
+        }
+        .table-container {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-transform: uppercase; /* Mengubah teks menjadi huruf kapital */
+            font-weight: bold; /* Menebalkan teks */
+        }
+        tr:hover {
+            background-color: #f2f2f2; /* Warna latar belakang saat hover */
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .action-buttons a {
+            text-decoration: none;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .edit {
+            background-color: #007bff;
+        }
+        .delete {
+            background-color: #dc3545;
+        }
+        .more-info {
+            background-color: #17a2b8; /* Warna untuk tombol more info */
+        }
+        .add-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* Efek transisi */
+        }
+        .add-button:hover {
+            background-color: #218838; /* Warna saat hover */
+        }
+        .side-menu a.active {
+            background-color: #4CAF50; /* Warna latar belakang untuk tautan aktif */
+            color: white; /* Warna teks untuk tautan aktif */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="index.html" class="brand">
+			<img src="images/logo.svg" alt="Logo" style="height: 30px; margin-right: 10px;">
+			E-Admin
+		</a>
+		<ul class="side-menu">
+			<li><a href="index.html" class="dashboard-link"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+			<li class="divider" data-text="main">Main</li>
+			<li>
+				<a href="input-nilai.html"><i class='bx bxs-inbox icon'></i> Input Nilai <i class='bx bx-chevron-right icon-right'></i></a>
+			</li>
+			<li><a href="#"><i class='bx bxs-chart icon'></i> Raport </a></li>
+			<li><a href="data-siswa.html" class="active"><i class='bx bxs-widget icon'></i> Data Siswa</a></li>
+			<li class="divider"></li>
+			<li class="profile">
+  				<div class="profile-details">
+   					 <img src="images/tes foto.png" alt="profileImg" />
+   						 <div class="name_job">
+     					 <div class="name">Arif</div>
+     					 <div class="job">Admin Sekolah</div>
+   						 </div>
+   						 <a href="#" class="logout-btn">
+     			 <i class='bx bx-log-out' id="log_out"></i>
+    </a>
+  </div>
+</li>
+		</ul>
+	</section>
+
+    <!-- MAIN CONTENT -->
+    <section id="content">
+        <main>
+            <h1 class="title">Data Siswa</h1>
+            <div class="breadcrumb">
+                <a href="index.html">Dashboard</a> / <a href="#">Data Siswa</a>
+            </div>
+            <div class="table-container">
+                <div class="header-container">
+                    <button class="add-button" onclick="showAddDataForm()">Tambah Data</button>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Cari siswa...">
+                        <select class="entries-select" id="entriesSelect">
+                            <option value="5">5</option>
+                            <option value="10" selected>10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                        <label for="entriesSelect">entries per page</label>
+                    </div>
+                </div>
+                <div id="tableInfo" style="margin-bottom: 10px;">
+                    Showing <span id="showingStart">1</span> to <span id="showingEnd">3</span> of <span id="totalEntries">3</span> entries
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Peserta Didik</th>
+                            <th>NISN/NIS</th>
+                            <th>Kelas</th>
+                            <th>Alamat</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTable">
+                        <tr>
+                            <td>1</td>
+                            <td>Alice</td>
+                            <td>1234567890</td>
+                            <td>12A</td>
+                            <td>Jl. Merdeka No. 1</td>
+                            <td class="action-buttons">
+                                <a href="#" class="edit"><i class='bx bxs-pencil'></i> Edit</a>
+                                <a href="#" class="delete" onclick="confirmDelete(event)"><i class='bx bxs-trash'></i> Hapus</a>
+                                <a href="#" class="more-info" onclick="showMoreInfo('Alice', '1234567890', '12A', 'Jl. Merdeka No. 1')"><i class='bx bxs-info-circle'></i> More Info</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Bob</td>
+                            <td>1234567891</td>
+                            <td>12B</td>
+                            <td>Jl. Pahlawan No. 2</td>
+                            <td class="action-buttons">
+                                <a href="#" class="edit"><i class='bx bxs-pencil'></i> Edit</a>
+                                <a href="#" class="delete" onclick="confirmDelete(event)"><i class='bx bxs-trash'></i> Hapus</a>
+                                <a href="#" class="more-info" onclick="showMoreInfo('Bob', '1234567891', '12B', 'Jl. Pahlawan No. 2')"><i class='bx bxs-info-circle'></i> More Info</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Charlie</td>
+                            <td>1234567892</td>
+                            <td>12C</td>
+                            <td>Jl. Kebangsaan No. 3</td>
+                            <td class="action-buttons">
+                                <a href="#" class="edit"><i class='bx bxs-pencil'></i> Edit</a>
+                                <a href="#" class="delete" onclick="confirmDelete(event)"><i class='bx bxs-trash'></i> Hapus</a>
+                                <a href="#" class="more-info" onclick="showMoreInfo('Charlie', '1234567892', '12C', 'Jl. Kebangsaan No. 3')"><i class='bx bxs-info-circle'></i> More Info</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="script.js"></script>
+    <script>
+        // Script untuk fitur pencarian
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#dataTable tr');
+
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let match = false;
+
+                for (let i = 1; i < cells.length - 1; i++) { // Mulai dari 1 untuk melewati No, dan berhenti sebelum Action
+                    if (cells[i].textContent.toLowerCase().includes(searchTerm)) {
+                        match = true;
+                        break;
+                    }
+                }
+
+                row.style.display = match ? '' : 'none';
+            });
+            updateTableInfo(); // Memperbarui info tabel setelah pencarian
+        });
+
+        // Menandai sidebar aktif
+        const sidebarLinks = document.querySelectorAll('#sidebar .side-menu a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Konfirmasi hapus
+        function confirmDelete(event) {
+            event.preventDefault(); // Mencegah tautan default
+            const row = event.target.closest('tr'); // Mendapatkan baris yang berisi tombol hapus
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data ini akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#007bff',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    row.remove(); // Menghapus baris dari tabel
+                    Swal.fire(
+                        'Terhapus!',
+                        'Data siswa telah dihapus.',
+                        'success'
+                    );
+                    updateTableInfo(); // Memperbarui info tabel
+                }
+            });
+        }
+
+        // Menampilkan form untuk menambah data
+        function showAddDataForm() {
+            Swal.fire({
+                title: 'Tambah Data Siswa',
+                html: `
+                    <input type="text" id="nama" class="swal2-input" placeholder="Nama Peserta Didik">
+                    <input type="text" id="nis" class="swal2-input" placeholder="NISN/NIS">
+                    <input type="text" id="kelas" class="swal2-input" placeholder="Kelas">
+                    <input type="text" id="alamat" class="swal2-input" placeholder="Alamat">
+                `,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Simpan',
+                cancelButtonText: 'Batal',
+                preConfirm: () => {
+                    const nama = document.getElementById('nama').value;
+                    const nis = document.getElementById('nis').value;
+                    const kelas = document.getElementById('kelas').value;
+                    const alamat = document.getElementById('alamat').value;
+                    if (!nama || !nis || !kelas || !alamat) {
+                        Swal.showValidationMessage('Semua field harus diisi!');
+                    }
+                    return { nama, nis, kelas, alamat };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>${document.querySelectorAll('#dataTable tr').length + 1}</td>
+                        <td>${result.value.nama}</td>
+                        <td>${result.value.nis}</td>
+                        <td>${result.value.kelas}</td>
+                        <td>${result.value.alamat}</td>
+                        <td class="action-buttons">
+                            <a href="#" class="edit"><i class='bx bxs-pencil'></i> Edit</a>
+                            <a href="#" class="delete" onclick="confirmDelete(event)"><i class='bx bxs-trash'></i> Hapus</a>
+                            <a href="#" class="more-info" onclick="showMoreInfo('${result.value.nama}', '${result.value.nis}', '${result.value.kelas}', '${result.value.alamat}')"><i class='bx bxs-info-circle'></i> More Info</a>
+                        </td>
+                    `;
+                    document.getElementById('dataTable').appendChild(newRow);
+                    Swal.fire('Berhasil!', 'Data siswa telah ditambahkan.', 'success');
+                    updateTableInfo(); // Memperbarui info tabel
+                }
+            });
+        }
+
+        // Menampilkan informasi lengkap siswa
+        function showMoreInfo(nama, nis, kelas, alamat) {
+            Swal.fire({
+                title: 'Informasi Siswa',
+                html: `
+                    <p><strong>Nama:</strong> ${nama}</p>
+                    <p><strong>NISN/NIS:</strong> ${nis}</p>
+                    <p><strong>Kelas:</strong> ${kelas}</p>
+                    <p><strong>Alamat:</strong> ${alamat}</p>
+                `,
+                confirmButtonText: 'Tutup'
+            });
+        }
+
+        // Memperbarui info tabel
+        function updateTableInfo() {
+            const totalRows = document.querySelectorAll('#dataTable tr').length;
+            const showingStart = totalRows > 0 ? 1 : 0; // Menampilkan 1 jika ada data
+            const showingEnd = totalRows; // Menampilkan total data
+            document.getElementById('showingStart').textContent = showingStart;
+            document.getElementById('showingEnd').textContent = showingEnd;
+            document.getElementById('totalEntries').textContent = totalRows;
+        }
+
+        // Fitur filter entri per halaman
+        document.getElementById('entriesSelect').addEventListener('change', function() {
+            const entriesPerPage = parseInt(this.value);
+            const rows = document.querySelectorAll('#dataTable tr');
+            rows.forEach((row, index) => {
+                row.style.display = index < entriesPerPage ? '' : 'none';
+            });
+            updateTableInfo(); // Memperbarui info tabel
+        });
+
+        // Inisialisasi info tabel saat halaman dimuat
+        updateTableInfo();
+    </script>
+</body>
+</html>

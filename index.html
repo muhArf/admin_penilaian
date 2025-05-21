@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" href="images/logo.svg" type="image/png"> <!-- Ganti dengan path logo Anda -->
+	<title>Adminstrasi Sekolah</title>
+	<style>
+		.welcome-message {
+			background-color: #e6f7e6;
+			padding: 20px;
+			border-radius: 10px;
+			margin-bottom: 20px;
+			text-align: center;
+			border: 1px solid #b2e0b2;
+		}
+		.welcome-message h2 {
+			color: #4CAF50;
+			margin: 0;
+		}
+		.welcome-message p {
+			color: #333;
+			font-size: 16px;
+			margin: 5px 0 0;
+		}
+		.welcome-message strong {
+			color: #4CAF50;
+		}
+	</style>
+</head>
+<body>
+	
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="index.html" class="brand">
+			<img src="images/logo.svg" alt="Logo" style="height: 30px; margin-right: 10px;">
+			E-Admin
+		</a>
+		<ul class="side-menu">
+			<li><a href="index.html" class="active"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+			<li class="divider" data-text="main">Main</li>
+			<li>
+				<a href="input-nilai.html"><i class='bx bxs-inbox icon'></i> Input Nilai <i class='bx bx-chevron-right icon-right'></i></a>
+			</li>
+			<li><a href="#"><i class='bx bxs-chart icon'></i> Raport </a></li>
+			<li><a href="data-siswa.html"><i class='bx bxs-widget icon'></i> Data Siswa</a></li>
+			<li class="divider"></li>
+			<li class="profile">
+  				<div class="profile-details">
+   					 <img src="images/tes foto.png" alt="profileImg" />
+   						 <div class="name_job">
+     					 <div class="name">Arif</div>
+     					 <div class="job">Admin Sekolah</div>
+   						 </div>
+   						 <a href="#" class="logout-btn">
+     			 <i class='bx bx-log-out' id="log_out"></i>
+    </a>
+  </div>
+</li>
+		</ul>
+	</section>
+
+	<!-- MAIN CONTENT -->
+	<section id="content">
+		<main>
+			<h1 class="title">Dashboard</h1>
+			<ul class="breadcrumbs">
+				<li><a href="#">Home</a></li>
+				<li class="divider">/</li>
+				<li><a href="input-nilai.html" class="active">Input Nilai</a></li>
+			</ul>
+
+			<!-- Menambahkan tulisan di atas kotak info -->
+			<div class="welcome-message">
+				<h2>Selamat Datang!</h2>
+				<p>Selamat Datang <strong>Arif</strong> di Sistem Informasi Pengolahan Data Nilai Siswa Prestasi Global, Anda Login Sebagai <strong>admin</strong>.</p>
+			</div>
+
+			<div class="info-data">
+				<div class="card">
+					<div class="head">
+						<div>
+							<h2>2020/2021</h2>
+							<p>Tahun Ajaran</p>
+						</div>
+						<i class='bx bx-calendar icon'></i>
+					</div>
+				</div>
+				<div class="card">
+					<div class="head">
+						<div>
+							<h2>Ganjil</h2>
+							<p>Semester</p>
+						</div>
+						<i class='bx bx-calendar-check icon'></i>
+					</div>
+				</div>
+				<div class="card">
+					<div class="head">
+						<div>
+							<h2>277</h2>
+							<p>Siswa</p>
+						</div>
+						<i class='bx bx-group icon'></i>
+					</div>
+				</div>
+				<div class="card">
+					<div class="head">
+						<div>
+							<h2>12</h2>
+							<p>Kelas</p>
+						</div>
+						<i class='bx bx-building icon'></i>
+					</div>
+				</div>
+				<div class="card">
+					<div class="head">
+						<div>
+							<h2>12</h2>
+							<p>Guru</p>
+						</div>
+						<i class='bx bx-user-circle icon'></i>
+					</div>
+				</div>
+			</div>
+		</main>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="script.js"></script>
+</body>
+</html>
